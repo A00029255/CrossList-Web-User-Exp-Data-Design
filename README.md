@@ -4,7 +4,7 @@
 
 ## Contents for Project
 ##### Choose a project theme (e.g. e-commerce, social media, booking systems, entertainment, etc.)
-##### Build a website with multiple pages
+##### Build a website with 5 multiple pages
 ##### Connect it to a Supabase database
 ##### Implement full CRUD functionality:
 ##### Create data
@@ -14,3 +14,4 @@
 ##### Use GitHub for teamwork and tracking
 ##### Create a recorded group presentation
 
+## Chosen theme E-Commerce
