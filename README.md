@@ -15,3 +15,10 @@
 ##### Create a recorded group presentation
 
 ## Chosen theme E-Commerce
+### Use AI for image generation (Possibly)
+### 5 Web Pages 
+#### Homepage
+#### Products
+#### Checkout?
+#### About
+#### Contact us
