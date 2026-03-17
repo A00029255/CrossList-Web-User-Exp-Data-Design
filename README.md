@@ -1,3 +1,6 @@
+# Important
+## You will need to download all the files, work on your part/page, then just overwrite the old one, I have added a navbar and footer which will need tweaks but it is just a basic one, when doing your css make your class for divs and others make it like class"checkout" so that there isnt any issues when we add the css altogether.
+
 # Project-Theme?
 
 ### Due Date for the recorded presentation: 24/April/2026
