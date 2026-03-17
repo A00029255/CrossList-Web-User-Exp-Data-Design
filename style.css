@@ -51,9 +51,9 @@ body {
      gap: 25%;
 }
 
-/*  I changed the bottom footer colour simply because the blue didnt match at all  */
+/*  This is the footer of the MAIN body */
 .site-footer {
-    background: #000;
+    background: rgb(0, 119, 255);
     color: #fff;
     
     font-family: sans-serif;
@@ -206,3 +206,13 @@ a {
   gap: 40px;
   flex-wrap: wrap;
 }
+
+/* This is the footer for the home page   */
+.home .site-footer {
+    background: #080000;
+    color: #fff;
+    
+    font-family: sans-serif;
+    font-size: 1.2em;
+}
+
