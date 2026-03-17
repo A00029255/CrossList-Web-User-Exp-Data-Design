@@ -17,7 +17,7 @@
 ##### Use GitHub for teamwork and tracking
 ##### Create a recorded group presentation
 
-## Chosen theme E-Commerce
+## Chosen theme E-Commerce (Tech store)
 ### Use AI for image generation (Possibly)
 ### 5 Web Pages 
 #### Homepage
