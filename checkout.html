@@ -8,6 +8,50 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
+  <script>
+let subtotal = 35; // initial total
+let discount = 0;
+
+function updateTotal() {
+  let total = subtotal - discount;
+  if (total < 0) total = 0;
+
+  document.getElementById("discount").innerText = discount;
+  document.getElementById("total").innerText = total;
+}
+
+// VOUCHER SYSTEM
+function applyVoucher() {
+  let code = document.getElementById("voucher").value;
+
+  if (code === "SAVE10") {
+    discount += 10;
+    alert("Voucher applied: €10 off");
+  } else if (code === "SAVE20") {
+    discount += 20;
+    alert("Voucher applied: €20 off");
+  } else {
+    alert("Invalid voucher code");
+  }
+
+  updateTotal();
+}
+
+// GIFT CARD SYSTEM
+function applyGiftCard() {
+  let code = document.getElementById("giftcard").value;
+
+  if (code === "GIFT50") {
+    discount += 50;
+    alert("Gift card applied: €50");
+  } else {
+    alert("Invalid gift card");
+  }
+
+  updateTotal();
+}
+</script>
+
   <body>
     <nav class="navbar">
       <a href="index.html">Homepage</a>
@@ -18,45 +62,86 @@
     </nav>
 
     <header>
-      <main class="checkout-container"></main>
-      <h1>Checkout</h1>
+      <main class="checkout-page">
 
-      <p>Please review your order and complete your purchase.</p>
+  <!-- LEFT: CART SUMMARY -->
+  <section class="cart-section">
+    <h2>Your Cart</h2>
 
-      <form class="checkout-form">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="John Doe" required />
+    <div class="cart-item">
+      <p>Product 1</p>
+      <p>€20</p>
+    </div>
+
+    <div class="cart-item">
+      <p>Product 2</p>
+      <p>€15</p>
+    </div>
+
+    <div class="totals">
+      <p>Subtotal: €<span id="subtotal">35</span></p>
+      <p>Discount: €<span id="discount">0</span></p>
+      <h3>Total: €<span id="total">35</span></h3>
+    </div>
+  </section>
+
+
+  <!-- RIGHT: CHECKOUT FORM -->
+  <section class="checkout-section">
+    <h2>Checkout</h2>
+
+    <form class="checkout-form">
+
+      <!-- CUSTOMER INFO -->
+      <h3>Customer Information</h3>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <textarea placeholder="Shipping Address" required></textarea>
+
+
+      <!-- SHIPPING -->
+      <h3>Shipping Method</h3>
+      <label><input type="radio" name="shipping" checked /> Standard (€5)</label>
+      <label><input type="radio" name="shipping" /> Express (€10)</label>
+
+
+      <!-- PAYMENT -->
+      <h3>Payment Method</h3>
+      <label><input type="radio" name="payment" checked onclick="showPayment('card')" /> Card</label>
+      <label><input type="radio" name="payment" onclick="showPayment('paypal')" /> PayPal</label>
+      <label><input type="radio" name="payment" onclick="showPayment('apple')" /> Apple Pay</label>
+
+
+      <div id="card-details">
+        <input type="text" placeholder="Card Number" />
+        <input type="text" placeholder="MM/YY" />
+        <input type="text" placeholder="CVV" />
       </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="john@email.com" required />
+      <div id="paypal-details" style="display:none;">
+        <p>Redirect to PayPal after checkout</p>
       </div>
 
-      <div class="form-group">
-        <label for="address">Shipping Address</label>
-        <textarea id="address" placeholder="123 Street, City, Country" required></textarea>
+      <div id="apple-details" style="display:none;">
+        <p>Use your device to complete payment</p>
       </div>
 
-      <div class="form-group">
-        <label for="card">Card Number</label>
-        <input type="text" id="card" placeholder="1234 5678 9012 3456" required />
-      </div>
 
-      <div class="form-group">
-        <label for="expiry">Expiry Date</label>
-        <input type="text" id="expiry" placeholder="MM/YY" required />
-      </div>
+      <!-- DISCOUNTS -->
+      <h3>Discounts</h3>
+      <input type="text" id="voucher" placeholder="Voucher code" />
+      <button type="button" onclick="applyVoucher()">Apply Voucher</button>
 
-      <div class="form-group">
-        <label for="cvv">CVV</label>
-        <input type="text" id="cvv" placeholder="123" required />
-      </div>
+      <input type="text" id="giftcard" placeholder="Gift card" />
+      <button type="button" onclick="applyGiftCard()">Apply Gift Card</button>
 
+
+      <!-- PLACE ORDER -->
       <button type="submit" class="btn-submit">Place Order</button>
     </form>
-  </main>
+  </section>
+
+</main>
     </header>
 
     <footer class="site-footer">
@@ -90,7 +175,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2024 Your Company</p>
+        <p>&copy; 2024 Tech Hub</p>
       </div>
     </footer>
   </body>

@@ -1,7 +1,7 @@
 /*  Right now we will type here what we change/add so to keep track and when we upload this to joop we can delete this */
 /*  Home-page: I changed the layout from the blue to black to fit the tech theme and also added a fetaures section + Nav bar to which im gonnna make it be able to clickable so when a customer clicks*/
 /*  "Phones" it will bring them to the products section about the phones we have. Btw, if it says ".home" it ref the homepage  */
-/* i have edited some staff on the checkout page but we need the tables 
+/* i have edited the staff for the checkout page aswell, it still needs polishing though.
 
 
 
@@ -87,7 +87,7 @@ body {
 
 .footer-bottom {
     border-top: 1px solid #444;
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
     padding-top: 10px;
     font-size: 1em;
@@ -217,61 +217,53 @@ a {
     font-size: 1.2em;
 }
 
-/* Checkout Container */
-.checkout-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/* This is the Checkout page */
+.checkout-page {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
 }
 
-.checkout-container h1 {
-  text-align: center;
-  margin-bottom: 1rem;
+.cart-section {
+  width: 40%;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.checkout-container p {
-  text-align: center;
-  margin-bottom: 2rem;
+.checkout-section {
+  width: 60%;
 }
 
-/* Form Styles */
-.checkout-form .form-group {
-  margin-bottom: 1.5rem;
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.checkout-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+.totals {
+  margin-top: 20px;
 }
 
 .checkout-form input,
 .checkout-form textarea {
   width: 100%;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  padding: 10px;
+  margin: 8px 0;
 }
 
-.checkout-form textarea {
-  resize: vertical;
-}
-
-/* Submit Button */
-.btn-submit {
-  width: 10%;
-  padding: 1rem;
-  background-color: #0d0c0b;
-  color: hsl(230, 21%, 95%);
-  border: none;
-  border-radius: 4px;
-  font-size: 1.1rem;
+button {
+  margin-top: 10px;
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+
+.btn-submit {
+  background: black;
+  color: white;
+  width: 100%;
+  font-size: 16px;
 }
 
 .btn-submit:hover {
