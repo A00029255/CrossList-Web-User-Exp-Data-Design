@@ -6,14 +6,11 @@
   <title>Products</title>
 
   <link rel="stylesheet" href="style.css" />
-
-  <!-- IMPORTANT: Supabase library MUST be loaded first -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <a href="index.html">Homepage</a>
     <a href="products.html">Products</a>
@@ -27,10 +24,7 @@
     <button onclick="filterProducts('all')">All</button>
     <button onclick="filterProducts('phone')">Phones</button>
     <button onclick="filterProducts('laptop')">Laptops</button>
-    <button onclick="filterProducts('tablet')">Tablets</button>
     <button onclick="filterProducts('headphone')">Headphones</button>
-    <button onclick="filterProducts('smartwatch')">Smartwatches</button>
-    <button onclick="filterProducts('accessorie')">Accessories</button>
   </section>
 
   <!-- SEARCH -->
@@ -38,16 +32,11 @@
     <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
   </section>
 
-  <!-- TITLE -->
-  <section class="products">
-    <h2>Our Products</h2>
-  </section>
+  <h2>Our Products</h2>
 
-  <!-- PRODUCT CONTAINER (MUST BE INSIDE BODY) -->
   <div class="product-container" id="productList"></div>
 
   <script>
-    // CREATE SUPABASE CLIENT
     const supabaseClient = supabase.createClient(
       "https://eehtvevnukdhrwudlmat.supabase.co",
       "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc"
@@ -56,14 +45,10 @@
     let allProducts = [];
     let currentFilter = "all";
 
-    // LOAD PRODUCTS
     async function loadProducts() {
       const { data, error } = await supabaseClient
         .from("products")
         .select("*");
-
-      console.log("Supabase data:", data);
-      console.log("Supabase error:", error);
 
       if (error) return;
 
@@ -71,21 +56,15 @@
       displayProducts(allProducts);
     }
 
-    // DISPLAY PRODUCTS
     function displayProducts(products) {
       const container = document.getElementById("productList");
-
-      if (!container) {
-        console.error("productList not found");
-        return;
-      }
-
       container.innerHTML = "";
 
       products.forEach(p => {
+
         container.innerHTML += `
           <div class="product-card" data-category="${p.category}">
-            <img src="${p.image_url || 'https://via.placeholder.com/200'}" alt="${p.name}">
+            <img src="${p.image_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80'}" alt="${p.name}">
             <h3>${p.name}</h3>
             <p>€${p.price}</p>
             <button onclick="addToCart('${p.name}')">Add to Cart</button>
@@ -94,18 +73,15 @@
       });
     }
 
-    // FILTER
     function filterProducts(category) {
       currentFilter = category;
       applyFilters();
     }
 
-    // SEARCH
     function searchProducts() {
       applyFilters();
     }
 
-    // APPLY FILTERS + SEARCH
     function applyFilters() {
       const search = document.getElementById("searchInput").value.toLowerCase();
 
@@ -120,17 +96,34 @@
       displayProducts(filtered);
     }
 
-    // CART
     function addToCart(name) {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart.push(name);
       localStorage.setItem("cart", JSON.stringify(cart));
-
       alert(name + " added to cart!");
     }
 
-    // START PAGE AFTER EVERYTHING LOADS
-    window.onload = loadProducts;
+    // 🔥 HASH FILTER (THIS IS THE IMPORTANT PART)
+    function applyHashFilter() {
+      const hash = window.location.hash.replace("#", "").toLowerCase();
+
+      if (hash === "iphone") {
+        filterProducts("phone");
+      }
+
+      if (hash === "laptop") {
+        filterProducts("laptop");
+      }
+
+      if (hash === "headphones") {
+        filterProducts("headphone");
+      }
+    }
+
+    window.onload = async function () {
+      await loadProducts();
+      applyHashFilter();
+    };
   </script>
 
 </body>
