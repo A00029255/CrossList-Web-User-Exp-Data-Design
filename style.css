@@ -248,13 +248,27 @@ a {
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
 }
 
 .contact-form button:hover {
   background-color: rgb(0, 119, 255);
 }
 
+.contact-info,
+.contact-details {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.faq {
+  width: 60%;
+  margin: 40px auto;
+}
+
+.map {
+  text-align: center;
+  margin: 40px auto;
+}
 
 /* My Products section */
 /* SUB NAVBAR */
