@@ -372,3 +372,56 @@ a {
   margin: 40px auto;
   text-align: center;
 }
+
+/* This is the Checkout page */
+.checkout-page {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
+
+.cart-section {
+  width: 40%;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.checkout-section {
+  width: 60%;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.totals {
+  margin-top: 20px;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background: black;
+  color: white;
+  width: 100%;
+  font-size: 16px;
+}
+
+.btn-submit:hover {
+  background-color: hwb(255 0% 10%);
+}
