@@ -352,3 +352,8 @@ a {
   background:navy;
   color: white;
 }
+
+.map {
+  margin: 40px auto;
+  text-align: center;
+}
