@@ -1,90 +1,114 @@
-
-
-
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>contact</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<body>
 
-  <body>
-    <nav class="navbar">
-      <a href="index.html">Homepage</a>
-      <a href="products.html">Products</a>
-      <a href="about_us.html">About</a>
-      <a href="checkout.html">Checkout</a>
-      <a href="contact_us.html">Contact</a>
-    </nav>
+  <nav class="navbar">
+    <a href="index.html">Homepage</a>
+    <a href="products.html">Products</a>
+    <a href="about_us.html">About</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="contact_us.html">Contact</a>
+  </nav>
 
-    <header>
-      <h1>Contact Us</h1>
+  <header>
+    <h1>Contact Us</h1>
+    <p>If you have any questions, feel free to contact us using the form below.</p>
+  </header>
 
-      <p>If you have any questions, feel free to contact us using the form below</p>
-    </header>
-   <section class="map">
-  <h2 style="text-align:center;">Our Location</h2>
-  <div style="text-align:center;">
-    <iframe
-      src="https://www.google.com/maps?q=Technological+University+Dublin+Tallaght&output=embed"
-      width="600"
-      height="450"
-      style="border:0;"
-      allowfullscreen=""
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
-    
-    <section class="contact-form">
-      <Form>
-        <label for="name">Full Name:</label>
+  <section class="contact-form">
+    <form onsubmit="showMessage(); return false;">
+      <label for="name">Full Name:</label>
       <input type="text" id="name" name="name" required>
-        <label for="email">Email Address:</label>
-    <input type="email" id="email" name="email" required>
-         <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
 
-    <button type="submit">Send Message</button>
-      </Form>
-    </section>
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
 
-    <footer class="site-footer">
-      <div class="footer-container">
-        <div class="footer-section social">
-          <h4>Follow Us</h4>
-          <a href="https://instagram.com" target="_blank">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
-              alt="Instagram"
-            />
-            Instagram
-          </a>
-          <a href="https://facebook.com" target="_blank">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"
-              alt="Facebook"
-            />
-            Facebook
-          </a>
-        </div>
-        <div class="footer-section contact">
-          <h4>Contact</h4>
-          <p>Email: <a href="mailto:info@tudublin.ie">info@tudublin.ie</a></p>
-          <p>Phone: <a href="tel:+35312345678">+353 1 234 5678</a></p>
-        </div>
-        <div class="footer-section location">
-          <h4>Location</h4>
-          <p>Technological University Dublin</p>
-          <p>Tallaght, Blessington Rd, Dublin 24, Ireland</p>
-        </div>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <section class="contact-info">
+    <h2>Opening Hours</h2>
+    <p>Monday - Friday: 9:00 AM – 5:00 PM</p>
+    <p>Saturday: 10:00 AM – 4:00 PM</p>
+    <p>Sunday: Closed</p>
+  </section>
+
+  <section class="contact-details">
+    <h2>Contact Information</h2>
+    <p><strong>Email:</strong> info@tudublin.ie</p>
+    <p><strong>Phone:</strong> +353 1 234 5678</p>
+    <p><strong>Address:</strong> TU Dublin Tallaght, Dublin 24</p>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>How long does delivery take?</strong><br> 3–5 working days.</p>
+    <p><strong>Can I return a product?</strong><br> Yes, within 14 days.</p>
+    <p><strong>Do you offer student discount?</strong><br> Yes, 10% off with student ID.</p>
+  </section>
+
+  <section class="map">
+    <h2>Our Location</h2>
+    <div>
+      <iframe
+        src="https://www.google.com/maps?q=Technological+University+Dublin+Tallaght&output=embed"
+        width="600"
+        height="450"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-section social">
+        <h4>Follow Us</h4>
+        <a href="https://instagram.com" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg">
+          Instagram
+        </a>
+        <a href="https://facebook.com" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg">
+          Facebook
+        </a>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 Your Company</p>
+
+      <div class="footer-section contact">
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:info@tudublin.ie">info@tudublin.ie</a></p>
+        <p>Phone: <a href="tel:+35312345678">+353 1 234 5678</a></p>
       </div>
-    </footer>
-  </body>
+
+      <div class="footer-section location">
+        <h4>Location</h4>
+        <p>Technological University Dublin</p>
+        <p>Tallaght, Blessington Rd, Dublin 24, Ireland</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 Your Company</p>
+    </div>
+  </footer>
+
+  <script>
+    function showMessage() {
+      alert("Thank you! Your message has been sent.");
+    }
+  </script>
+
+</body>
 </html>
