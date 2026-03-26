@@ -6,11 +6,14 @@
   <title>Products</title>
 
   <link rel="stylesheet" href="style.css" />
+
+  <!-- IMPORTANT: Supabase library MUST be loaded first -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 
 <body>
 
-  <!-- MAIN NAVBAR -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <a href="index.html">Homepage</a>
     <a href="products.html">Products</a>
@@ -19,7 +22,7 @@
     <a href="contact_us.html">Contact</a>
   </nav>
 
-  <!-- SUB NAVBAR (FILTER) -->
+  <!-- FILTER -->
   <section class="categories">
     <button onclick="filterProducts('all')">All</button>
     <button onclick="filterProducts('phone')">Phones</button>
@@ -35,139 +38,99 @@
     <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
   </section>
 
-  <!-- PRODUCTS -->
+  <!-- TITLE -->
   <section class="products">
     <h2>Our Products</h2>
-
-    <div class="product-container" id="productList">
-
-      <!-- PRODUCT PHONES -->
-      <div class="product-card" data-category="phone">
-        <img src="https://via.placeholder.com/200" alt="Phone">
-        <h3>iPhone 17</h3>
-        <p>€899.99</p>
-        <button onclick="addToCart('iPhone 17')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="phone">
-        <img src="https://via.placeholder.com/200" alt="Phone">
-        <h3>Galaxy S26</h3>
-        <p>€799.99</p>
-        <button onclick="addToCart('Galaxy S26')">Add to Cart</button>
-      </div>      
-
-      <!-- PRODUCT LAPTOPS -->
-      <div class="product-card" data-category="laptop">
-        <img src="https://via.placeholder.com/200" alt="Laptop">
-        <h3>MacBook Air</h3>
-        <p>€1,199.99</p>
-        <button onclick="addToCart('MacBook Air')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="laptop">
-        <img src="https://via.placeholder.com/200" alt="Laptop">
-        <h3>Galaxy Book6 Pro</h3>
-        <p>€1,999.99</p>
-        <button onclick="addToCart('Galaxy Book6 Pro')">Add to Cart</button>
-      </div>
-
-      <!-- PRODUCT TABLETS -->
-      <div class="product-card" data-category="tablet">
-        <img src="https://via.placeholder.com/200" alt="Tablet">
-        <h3>Galaxy Tab S11 Ultra</h3>
-        <p>€1,399.99</p>
-        <button onclick="addToCart('Galaxy Tab S11 Ultra')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="tablet">
-        <img src="https://via.placeholder.com/200" alt="Tablet">
-        <h3>iPad Pro</h3>
-        <p>€1,129.99</p>
-        <button onclick="addToCart('iPad Pro')">Add to Cart</button>
-      </div>
-
-      <!-- PRODUCT HEADPHONES -->
-      <div class="product-card" data-category="headphone">
-        <img src="https://via.placeholder.com/200" alt="Headphones">
-        <h3>Galaxy Buds4 Pro</h3>
-        <p>€259.99</p>
-        <button onclick="addToCart('Galaxy Buds4 Pro')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="headphone">
-        <img src="https://via.placeholder.com/200" alt="Headphones">
-        <h3>AirPods Pro 3</h3>
-        <p>€249.99</p>
-        <button onclick="addToCart('AirPods Pro 3')">Add to Cart</button>
-      </div>
-
-      <!-- PRODUCT SMARTWATCHES -->
-      <div class="product-card" data-category="smartwatch">
-        <img src="https://via.placeholder.com/200" alt="Smartwatches">
-        <h3>Samsung Galaxy Watch 8</h3>
-        <p>€379.99</p>
-        <button onclick="addToCart('Samsung Galaxy Watch 8')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="smartwatch">
-        <img src="https://via.placeholder.com/200" alt="Smartwatches">
-        <h3>Apple Watch Ultra 3</h3>
-        <p>€899.99</p>
-        <button onclick="addToCart('Apple Watch Ultra 3')">Add to Cart</button>
-      </div>
-
-      <!-- PRODUCT ACCESSORIES -->
-      <div class="product-card" data-category="accessorie">
-        <img src="https://via.placeholder.com/200" alt="Accessories">
-        <h3>45W Super Fast Charger 2.0</h3>
-        <p>€39.99</p>
-        <button onclick="addToCart('45W Super Fast Charger 2.0')">Add to Cart</button>
-      </div>
-
-      <div class="product-card" data-category="accessorie">
-        <img src="https://via.placeholder.com/200" alt="Accessories">
-        <h3>Apple Pencil</h3>
-        <p>€89.99</p>
-        <button onclick="addToCart('Apple Pencil')">Add to Cart</button>
-      </div>
-
-    </div>
   </section>
 
+  <!-- PRODUCT CONTAINER (MUST BE INSIDE BODY) -->
+  <div class="product-container" id="productList"></div>
+
   <script>
+    // CREATE SUPABASE CLIENT
+    const supabaseClient = supabase.createClient(
+      "https://eehtvevnukdhrwudlmat.supabase.co",
+      "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc"
+    );
+
+    let allProducts = [];
     let currentFilter = "all";
 
+    // LOAD PRODUCTS
+    async function loadProducts() {
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select("*");
+
+      console.log("Supabase data:", data);
+      console.log("Supabase error:", error);
+
+      if (error) return;
+
+      allProducts = data || [];
+      displayProducts(allProducts);
+    }
+
+    // DISPLAY PRODUCTS
+    function displayProducts(products) {
+      const container = document.getElementById("productList");
+
+      if (!container) {
+        console.error("productList not found");
+        return;
+      }
+
+      container.innerHTML = "";
+
+      products.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card" data-category="${p.category}">
+            <img src="${p.image_url || 'https://via.placeholder.com/200'}" alt="${p.name}">
+            <h3>${p.name}</h3>
+            <p>€${p.price}</p>
+            <button onclick="addToCart('${p.name}')">Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+
+    // FILTER
     function filterProducts(category) {
       currentFilter = category;
       applyFilters();
     }
 
+    // SEARCH
     function searchProducts() {
       applyFilters();
     }
 
+    // APPLY FILTERS + SEARCH
     function applyFilters() {
-      let searchInput = document.getElementById("searchInput").value.toLowerCase();
-      let products = document.querySelectorAll(".product-card");
+      const search = document.getElementById("searchInput").value.toLowerCase();
 
-      products.forEach(product => {
-        let name = product.querySelector("h3").innerText.toLowerCase();
-        let category = product.getAttribute("data-category");
+      const filtered = allProducts.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(search);
+        const matchesCategory =
+          currentFilter === "all" || p.category === currentFilter;
 
-        let matchesSearch = name.includes(searchInput);
-        let matchesCategory = (currentFilter === "all" || category === currentFilter);
-
-        if (matchesSearch && matchesCategory) {
-          product.style.display = "block";
-        } else {
-          product.style.display = "none";
-        }
+        return matchesSearch && matchesCategory;
       });
+
+      displayProducts(filtered);
     }
 
-    function addToCart(productName) {
-      alert(productName + " added to cart!");
+    // CART
+    function addToCart(name) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(name);
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      alert(name + " added to cart!");
     }
+
+    // START PAGE AFTER EVERYTHING LOADS
+    window.onload = loadProducts;
   </script>
 
 </body>
