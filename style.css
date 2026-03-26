@@ -1,0 +1,354 @@
+/*  Right now we will type here what we change/add so to keep track and when we upload this to joop we can delete this */
+/*  Home-page: I changed the layout from the blue to black to fit the tech theme and also added a fetaures section + Nav bar to which im gonnna make it be able to clickable so when a customer clicks*/
+/*  "Phones" it will bring them to the products section about the phones we have. Btw, if it says ".home" it ref the homepage  */
+
+
+
+body {
+  background-color: #ffffff;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  background: darkblue;
+  padding: 30px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+/*  The blue colour Nav bar looks good so far so we can honestly just keep that for how it is right now  */
+.navbar a:hover {
+  background-color: rgb(0, 119, 255);
+  color: #fff;
+}
+
+/*  My footer */
+.site-footer {
+    background: #7ee3f0;
+    color: #fff;
+    padding: 20px 0;
+    font-family: sans-serif;
+}
+
+.footer-container {
+   display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    padding: 20px 50px ;
+     gap: 25%;
+}
+
+/*  This is the footer of the MAIN body */
+.site-footer {
+    background: rgb(0, 119, 255);
+    color: #fff;
+    
+    font-family: sans-serif;
+    font-size: 1.2em;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+     margin-bottom: 10px;
+   
+}
+
+
+
+.footer-section a {
+    color: #f1f1f1;
+    text-decoration: none;
+    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-section a img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 1em;
+}
+
+
+
+a {
+  text-decoration: none;
+}
+
+/* This changes the homepage  */
+.home {
+  font-family: Arial, sans-serif;
+}
+
+/* This is the "Phones, laptops, Tablets etc Nave bar (if you click on it, it doesnt work just yet*/
+.home .categories {
+  display: flex;
+  justify-content: center;
+  background: #000;
+  padding: 15px;
+}
+
+.home .categories a {
+  color: #fff;
+  margin: 0 15px;
+  font-size: 18px;
+}
+
+.home .categories a:hover {
+  color: #ccc;
+}
+
+/* middle  */
+.home .middle {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f5f5f5;
+}
+
+.home .middle h1 {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.home .middle p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.home .btn {
+  background: #000;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 5px;
+}
+
+.home .btn:hover {
+  background: #333;
+}
+
+/* PRODUCTS (Also doesnt work just yet but I will get to it!*/
+.home .featured {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.home .product-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.home .product-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 220px;
+  border-radius: 10px;
+  background: #fff;
+  transition: 0.3s;
+}
+
+.home .product-card:hover {
+  transform: scale(1.05);
+}
+
+.home .product-card img {
+  width: 100%;
+}
+
+.home .product-card button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.home .product-card button:hover {
+  background: #333;
+}
+
+/* This is the lower middle section about the "why choose us"  */
+.home .why-us {
+  background: #000;
+  color: #fff;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.home .features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* This is the footer for the home page   */
+.home .site-footer {
+    background: #080000;
+    color: #fff;
+    
+    font-family: sans-serif;
+    font-size: 1.2em;
+}
+
+/* Contact Page */
+.contact-form {
+  width: 50%;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.contact-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  background-color: darkblue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.contact-form button:hover {
+  background-color: rgb(0, 119, 255);
+}
+
+
+/* My Products section */
+/* SUB NAVBAR */
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: black;
+  padding: 15px 0;
+}
+
+.categories a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.categories a:hover {
+  color: #ccc;
+}
+
+/* SEARCH BAR */
+.search-section {
+  text-align: center;
+  margin: 20px;
+}
+
+.search-section input {
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* PRODUCTS SECTION */
+.products {
+  text-align: center;
+}
+
+.product-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 260px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card img {
+  width: 100%;
+}
+
+.product-card button {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  background: darkblue;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.product-card button:hover {
+  background: rgb(0, 119, 255);
+}
+
+/* FILTER BUTTONS */
+.categories button {
+  padding: 10px 15px;
+  border: none;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.categories button:hover {
+  background:navy;
+  color: white;
+}
