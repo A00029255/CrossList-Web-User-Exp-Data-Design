@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a href="index.html">Homepage</a>
+      <a href="products.html">Products</a>
+      <a href="about_us.html">About</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="contact_us.html">Contact</a>
+    </nav>
+
+    <!-- FILTER -->
+    <section class="categories">
+      <button onclick="filterProducts('all')">All</button>
+      <button onclick="filterProducts('phone')">Phones</button>
+      <button onclick="filterProducts('laptop')">Laptops</button>
+      <button onclick="filterProducts('tablet')">Tablets</button>
+      <button onclick="filterProducts('headphone')">Headphones</button>
+      <button onclick="filterProducts('smartwatch')">Smartwatches</button>
+      <button onclick="filterProducts('accessorie')">Accessories</button>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search-section">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+        onkeyup="searchProducts()"
+      />
+    </section>
+
+    <!-- SORT -->
+    <div style="text-align: center; margin: 10px">
+      <button onclick="sortBy('id')">Sort by Newest</button>
+      <button onclick="sortBy('name')">Sort A-Z</button>
+    </div>
+
+    <!-- PRODUCTS -->
+    <section class="products">
+      <h2>Our Products</h2>
+      <div class="product-container" id="productList"></div>
+    </section>
+
+    <!-- ADD / UPDATE -->
+    <section class="products">
+      <h3 id="formTitle">Add Product</h3>
+      <input id="name" placeholder="Name" />
+      <input id="price" placeholder="Price" />
+      <input type="file" id="imageFile" />
+      <input id="category" placeholder="Category (phone, laptop...)" />
+      <button id="submitBtn" onclick="addOrUpdateProduct()">Add Product</button>
+    </section>
+
+    <script>
+      const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
+      const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
+
+      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+      let currentFilter = "all";
+      let allProducts = [];
+      let editingId = null;
+
+      // LOAD PRODUCTS
+      async function loadProducts() {
+        const { data, error } = await supabaseClient
+          .from("products")
+          .select("*");
+
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        allProducts = data;
+        displayProducts(allProducts);
+      }
+
+      // DISPLAY
+      function displayProducts(products) {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+
+        products.forEach((product) => {
+          const card = document.createElement("div");
+          card.classList.add("product-card");
+
+          card.innerHTML = `
+          <img src="${product.image_url || "https://via.placeholder.com/200"}">
+          <h3>${product.name}</h3>
+          <p>€${product.price}</p>
+          <button onclick="addToCart('${product.name}')">Add to Cart</button>
+          <button onclick="editProduct(${product.id}, '${product.name}', ${product.price}, '${product.category}')">Edit</button>
+          <button onclick="deleteProduct(${product.id})">Delete</button>
+        `;
+
+          productList.appendChild(card);
+        });
+      }
+
+      // EDIT
+      function editProduct(id, name, price, category) {
+        document.getElementById("name").value = name;
+        document.getElementById("price").value = price;
+        document.getElementById("category").value = category;
+
+        editingId = id;
+
+        document.getElementById("formTitle").innerText = "Update Product";
+        document.getElementById("submitBtn").innerText = "Update Product";
+      }
+
+      // ADD / UPDATE + IMAGE UPLOAD
+      async function addOrUpdateProduct() {
+        const name = document.getElementById("name").value;
+        const price = document.getElementById("price").value;
+        const category = document.getElementById("category").value;
+
+        const fileInput = document.getElementById("imageFile");
+        let imageUrl = "";
+
+        // Upload image
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileName = Date.now() + "-" + file.name;
+
+          const { error: uploadError } = await supabaseClient.storage
+            .from("product-images")
+            .upload(fileName, file);
+
+          if (uploadError) {
+            console.error(uploadError);
+            return;
+          }
+
+          const { data } = supabaseClient.storage
+            .from("product-images")
+            .getPublicUrl(fileName);
+
+          imageUrl = data.publicUrl;
+        }
+
+        if (editingId) {
+          await supabaseClient
+            .from("products")
+            .update({
+              name,
+              price,
+              category,
+              ...(imageUrl && { image_url: imageUrl }),
+            })
+            .eq("id", editingId);
+        } else {
+          await supabaseClient
+            .from("products")
+            .insert([{ name, price, category, image_url: imageUrl }]);
+        }
+
+        resetForm();
+        loadProducts();
+      }
+
+      // DELETE
+      async function deleteProduct(id) {
+        await supabaseClient.from("products").delete().eq("id", id);
+
+        loadProducts();
+      }
+
+      // SORT
+      function sortBy(type) {
+        let sorted = [...allProducts];
+
+        if (type === "id") {
+          sorted.sort((a, b) => b.id - a.id);
+        } else {
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        displayProducts(sorted);
+      }
+
+      // FILTER + SEARCH
+      function filterProducts(category) {
+        currentFilter = category;
+        applyFilters();
+      }
+
+      function searchProducts() {
+        applyFilters();
+      }
+
+      function applyFilters() {
+        let searchInput = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+
+        let filtered = allProducts.filter(
+          (product) =>
+            product.name.toLowerCase().includes(searchInput) &&
+            (currentFilter === "all" || product.category === currentFilter),
+        );
+
+        displayProducts(filtered);
+      }
+
+      // RESET FORM
+      function resetForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("category").value = "";
+        document.getElementById("imageFile").value = "";
+
+        editingId = null;
+
+        document.getElementById("formTitle").innerText = "Add Product";
+        document.getElementById("submitBtn").innerText = "Add Product";
+      }
+
+      // CART
+      function addToCart(productName) {
+        alert(productName + " added to cart!");
+      }
+
+      window.onload = loadProducts;
+    </script>
+  </body>
+</html>
