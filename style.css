@@ -332,6 +332,7 @@ a {
 
 .product-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .product-card img {
@@ -364,13 +365,116 @@ a {
 }
 
 .categories button:hover {
-  background:navy;
+  background: navy;
   color: white;
 }
 
-.map {
-  margin: 40px auto;
+/* ADD OR UPDATE PRODUCTS */
+.product_add_update {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.product_add_update h3 {
   text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.product_add_update input,
+.product_add_update select {
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.product_add_update input:hover,
+.product_add_update select:hover {
+  border-color: navy;
+}
+
+.product_add_update select:hover {
+  cursor: pointer;
+}
+
+.product_add_update input:focus,
+.product_add_update select:focus {
+  border-color: navy;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.product_add_update input[type="file"] {
+  padding: 5px;
+  border: none;
+}
+
+.product_add_update button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: navy;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product_add_update button:hover {
+  background-color: #007bff;
+}
+
+/* SORT PRODUCTS */
+.product_sort {
+  display: flex;
+  justify-content: right;
+  margin: 20px;
+}
+
+.product_sort select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.product_sort select:hover {
+  border-color: #007bff;
+}
+
+.product_sort select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(47, 79, 79, 0.4);
+}
+
+/* FOOTER PRODUCTS */
+.product_footer {
+  background: #080000;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 20px 50px;
+  gap: 25%;
+}
+
+.product_footer p {
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1.2em;
 }
 
 /* This is the Checkout page */
