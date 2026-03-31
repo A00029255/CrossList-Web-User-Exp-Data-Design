@@ -41,10 +41,13 @@
     </section>
 
     <!-- SORT -->
-    <div style="text-align: center; margin: 10px">
-      <button onclick="sortBy('id')">Sort by Newest</button>
-      <button onclick="sortBy('name')">Sort A-Z</button>
-    </div>
+    <section class="product_sort">
+      <select onchange="sortBy(this.value)">
+        <option value="">Filter By</option>
+        <option value="id">Newest</option>
+        <option value="name">A-Z</option>
+      </select>
+    </section>
 
     <!-- PRODUCTS -->
     <section class="products">
@@ -53,24 +56,39 @@
     </section>
 
     <!-- ADD / UPDATE -->
-    <section class="products">
+    <section class="product_add_update">
       <h3 id="formTitle">Add Product</h3>
       <input id="name" placeholder="Name" />
       <input id="price" placeholder="Price" />
       <input type="file" id="imageFile" />
-      <input id="category" placeholder="Category (phone, laptop...)" />
+      <select id="category">
+        <option value="">Select Category</option>
+        <option value="phone">Phones</option>
+        <option value="laptop">Laptops</option>
+        <option value="tablet">Tablets</option>
+        <option value="headphone">Headphones</option>
+        <option value="smartwatch">Smartwatches</option>
+        <option value="accessorie">Accessories</option>
+      </select>
       <button id="submitBtn" onclick="addOrUpdateProduct()">Add Product</button>
     </section>
 
+    <!-- FOOTER -->
+    <footer class="product_footer">
+      <p>&copy; 2024 Tech Hub</p>
+    </footer>
+
     <script>
+      // connecting to supabase
       const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
       const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
 
       const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-      let currentFilter = "all";
-      let allProducts = [];
-      let editingId = null;
+      // global variables
+      let currentFilter = "all"; // tracks selected category
+      let allProducts = []; // stores products from database
+      let editingId = null; // tells web if you're editing or adding
 
       // LOAD PRODUCTS
       async function loadProducts() {
@@ -80,29 +98,31 @@
 
         if (error) {
           console.error(error);
-          return;
+          return; // stop function if something goes wrong
         }
 
         allProducts = data;
-        displayProducts(allProducts);
+        displayProducts(allProducts); // displays data
       }
 
       // DISPLAY
       function displayProducts(products) {
         const productList = document.getElementById("productList");
-        productList.innerHTML = "";
+        productList.innerHTML = ""; // remove old products to avoid duplicating
 
         products.forEach((product) => {
           const card = document.createElement("div");
           card.classList.add("product-card");
 
-          card.innerHTML = `
+          card.innerHTML =
+            // uses product image or placeholder if none exists
+            `
           <img src="${product.image_url || "https://via.placeholder.com/200"}">
           <h3>${product.name}</h3>
           <p>€${product.price}</p>
           <button onclick="addToCart('${product.name}')">Add to Cart</button>
           <button onclick="editProduct(${product.id}, '${product.name}', ${product.price}, '${product.category}')">Edit</button>
-          <button onclick="deleteProduct(${product.id})">Delete</button>
+          <button onclick="deleteProduct(${product.id}, '${product.name}')">Delete</button>
         `;
 
           productList.appendChild(card);
@@ -115,25 +135,40 @@
         document.getElementById("price").value = price;
         document.getElementById("category").value = category;
 
-        editingId = id;
+        editingId = id; // updates not create
 
-        document.getElementById("formTitle").innerText = "Update Product";
+        document.getElementById("formTitle").innerText = "Update Product"; // informs user we are editing
         document.getElementById("submitBtn").innerText = "Update Product";
       }
 
       // ADD / UPDATE + IMAGE UPLOAD
       async function addOrUpdateProduct() {
-        const name = document.getElementById("name").value;
+        const name = document.getElementById("name").value; // reads what user has typed
         const price = document.getElementById("price").value;
         const category = document.getElementById("category").value;
 
-        const fileInput = document.getElementById("imageFile");
+        const fileInput = document.getElementById("imageFile"); // gets users file
         let imageUrl = "";
+
+        if (!name) {
+          alert("Please select a name");
+          return;
+        }
+
+        if (!price) {
+          alert("Please select a price");
+          return;
+        }
+
+        if (!category) {
+          alert("Please select a category");
+          return;
+        }
 
         // Upload image
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
-          const fileName = Date.now() + "-" + file.name;
+          const fileName = Date.now() + "-" + file.name; // makes a unique file name to prevent overwrites
 
           const { error: uploadError } = await supabaseClient.storage
             .from("product-images")
@@ -146,46 +181,67 @@
 
           const { data } = supabaseClient.storage
             .from("product-images")
-            .getPublicUrl(fileName);
+            .getPublicUrl(fileName); // gets usable url from storage
 
-          imageUrl = data.publicUrl;
+          imageUrl = data.publicUrl; // link stored in storage
         }
 
-        if (editingId) {
+        if (editingId) // if we are editing
+        {
           await supabaseClient
             .from("products")
             .update({
               name,
               price,
               category,
-              ...(imageUrl && { image_url: imageUrl }),
+              ...(imageUrl && { image_url: imageUrl }), // we only update image if a new one is uploaded
             })
             .eq("id", editingId);
-        } else {
+        } else // we are creating
+        {
           await supabaseClient
             .from("products")
-            .insert([{ name, price, category, image_url: imageUrl }]);
+            .insert([{ name, price, category, image_url: imageUrl }]); // adds the new / updates the row
         }
 
         resetForm();
-        loadProducts();
+        loadProducts(); // reload the products for any new products
       }
 
       // DELETE
-      async function deleteProduct(id) {
-        await supabaseClient.from("products").delete().eq("id", id);
+      async function deleteProduct(id, name) {
+        const confirmDelete = confirm(
+          `Are you sure you want to delete "${name}"?`,
+        );
 
-        loadProducts();
+        if (!confirmDelete) {
+          return; // stops if user cancels
+        }
+
+        // delete from supabase
+        const { error } = await supabaseClient
+          .from("products")
+          .delete()
+          .eq("id", id);
+
+        //error or success message
+        if (error) {
+          console.error(error);
+          alert("Error deleting product");
+        } else {
+          alert("Product deleted successfully");
+          loadProducts(); // reload the products for any deleted products
+        }
       }
 
       // SORT
       function sortBy(type) {
-        let sorted = [...allProducts];
+        let sorted = [...allProducts]; // makes a copy for sorting
 
         if (type === "id") {
-          sorted.sort((a, b) => b.id - a.id);
+          sorted.sort((a, b) => b.id - a.id); // sorts by id (newest)
         } else {
-          sorted.sort((a, b) => a.name.localeCompare(b.name));
+          sorted.sort((a, b) => a.name.localeCompare(b.name)); // sort from alphabetical order
         }
 
         displayProducts(sorted);
@@ -194,7 +250,7 @@
       // FILTER + SEARCH
       function filterProducts(category) {
         currentFilter = category;
-        applyFilters();
+        applyFilters(); // sorts from category
       }
 
       function searchProducts() {
@@ -203,13 +259,13 @@
 
       function applyFilters() {
         let searchInput = document
-          .getElementById("searchInput")
+          .getElementById("searchInput") // reads the users text
           .value.toLowerCase();
 
         let filtered = allProducts.filter(
           (product) =>
-            product.name.toLowerCase().includes(searchInput) &&
-            (currentFilter === "all" || product.category === currentFilter),
+            product.name.toLowerCase().includes(searchInput) && // case insensitve search
+            (currentFilter === "all" || product.category === currentFilter), // filter for all or category
         );
 
         displayProducts(filtered);
@@ -222,7 +278,7 @@
         document.getElementById("category").value = "";
         document.getElementById("imageFile").value = "";
 
-        editingId = null;
+        editingId = null; // switches back to editing mode
 
         document.getElementById("formTitle").innerText = "Add Product";
         document.getElementById("submitBtn").innerText = "Add Product";
