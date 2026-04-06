@@ -71,6 +71,7 @@
         <option value="accessorie">Accessories</option>
       </select>
       <button id="submitBtn" onclick="addOrUpdateProduct()">Add Product</button>
+      <button id="cancelBtn" onclick="cancelEdit()">Cancel</button>
     </section>
 
     <!-- FOOTER -->
@@ -79,13 +80,13 @@
     </footer>
 
     <script>
-      // connecting to supabase
+      // CONNECTS TO SUPABASE
       const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
       const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
 
       const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-      // global variables
+      // GLOBAL VARIABLES
       let currentFilter = "all"; // tracks selected category
       let allProducts = []; // stores products from database
       let editingId = null; // tells web if you're editing or adding
@@ -165,7 +166,7 @@
           return;
         }
 
-        // Upload image
+        // UPLOAD IMAGE
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
           const fileName = Date.now() + "-" + file.name; // makes a unique file name to prevent overwrites
@@ -282,6 +283,11 @@
 
         document.getElementById("formTitle").innerText = "Add Product";
         document.getElementById("submitBtn").innerText = "Add Product";
+      }
+
+      // CANCEL FUNCTION
+      function cancelEdit() {
+        resetForm(); // clears everything
       }
 
       // CART
