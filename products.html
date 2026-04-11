@@ -121,7 +121,7 @@
           <img src="${product.image_url || "https://via.placeholder.com/200"}">
           <h3>${product.name}</h3>
           <p>€${product.price}</p>
-          <button onclick="addToCart('${product.name}')">Add to Cart</button>
+          <button onclick="addToCart('${product.id}', '${product.name}')">Add to Cart</button>
           <button onclick="editProduct(${product.id}, '${product.name}', ${product.price}, '${product.category}')">Edit</button>
           <button onclick="deleteProduct(${product.id}, '${product.name}')">Delete</button>
         `;
@@ -291,8 +291,18 @@
       }
 
       // CART
-      function addToCart(productName) {
-        alert(productName + " added to cart!");
+      function addToCart(productId, productName) {
+        supabaseClient
+          .from("cart")
+          .insert([{ product_id: productId, }]) // adds the new / updates the row
+          .then(({ data, error }) => {
+            if (error) {
+              console.error(error);
+              alert("Error adding to cart");
+            } else {
+              alert(productName + " added to cart!");
+            }
+          });
       }
 
       window.onload = loadProducts;
