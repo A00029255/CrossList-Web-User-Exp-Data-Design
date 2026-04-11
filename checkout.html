@@ -6,19 +6,128 @@
     <title>checkout</title>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   </head>
 
   <script>
-let subtotal = 35; // initial total
-let discount = 0;
 
-function updateTotal() {
-  let total = subtotal - discount;
-  if (total < 0) total = 0;
+      const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
+      const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
 
-  document.getElementById("discount").innerText = discount;
-  document.getElementById("total").innerText = total;
-}
+      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function loadCart() {
+          const { data, error } = await supabaseClient
+          .from("cart")
+          .select(
+            `id,product_id, products!inner (name, price, discount)`
+          )
+
+          cartItems = data;
+
+          console.log(cartItems, error); // for debugging
+
+        if (error) {
+          console.error(error);
+           alert("I can't load the cart right now. Please try again later.");
+          return; // stop function if something goes wrong
+        }
+
+        displayCartItems(cartItems); // displays data
+    }
+
+    function displayCartItems(cartItems) {
+      const cartSection = document.querySelector(".cart-section");
+      if (!cartItems || cartItems.length === 0) {
+        cartSection.innerHTML = "<h2>Your Cart is Empty</h2>";
+        return;
+      }
+
+      cartSection.innerHTML = "<h2>Your Cart</h2>"; // reset
+      total = 0;
+      discount = 0;
+
+      const groupedItems = {};
+
+      // Group items by product_id to calculate quantities
+      cartItems.forEach(data => {
+        const product = data.products;
+        const productId = data.product_id;
+        const cartId = data.id;
+
+        if (!groupedItems[productId]) {
+          groupedItems[productId] = { 
+            id:productId,
+            name: product.name,
+            price: product.price,
+            discount: product.discount,
+            quantity: 0, 
+            cartids: [] 
+          };
+        } 
+        groupedItems[productId].quantity++;
+        groupedItems[productId].cartids.push(cartId); // add cart item id to list  
+
+      });
+
+      console.log(groupedItems); // for debugging
+      Object.values(groupedItems).forEach(product => {
+        cartid = product.cartids[0]; // get one cart id for deletion
+        console.log(product, cartid); // for debugging
+        console.log("Displaying product: " + product.name + " with cart id " + cartid); // for debugging
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+        itemDiv.innerHTML = `
+          <p>${product.name}</p>
+          <p>€${product.price}</p>
+          <p> x ${product.quantity}</p>
+          <p> <span onclick="removeFromCart(${product.id}, '${product.name}',${cartid})" class="glyphicon glyphicon-trash"></span></p>
+
+        `;
+        cartSection.appendChild(itemDiv);
+        discountAmount = product.price * product.quantity * (product.discount || 0) / 100; // calculate discount
+        total += product.price * product.quantity; // calculate total with discount
+        discount += discountAmount; // accumulate total discount
+
+      });
+
+      updateTotal(total,discount);
+
+    }
+    function removeFromCart(id, name,cartid) {
+      // Implement functionality to remove item from cart
+      const confirmDelete = confirm("Are you sure you want to remove " + name + " from the cart?");
+      if (confirmDelete) {
+        // Call Supabase to delete the item from the cart
+        console.log("Attempting to remove product_id " + id + " with cart id " + cartid); // for debugging
+        supabaseClient
+          .from("cart")
+          .delete()
+          .eq("product_id", id)
+          .eq("id", cartid) // ensure we delete the correct cart item
+          .then(({ data, error }) => {
+            if (error) {
+              console.error(error);
+              alert("Failed to remove item from cart. Please try again.");
+            } else {
+              alert(name + " removed from cart.");
+              loadCart(); // Refresh cart display
+            }
+          });
+      }
+    }
+
+  function updateTotal(total, discount  ) {
+    const cartSection = document.querySelector(".cart-section");
+    const itemDiv = document.createElement("div");
+    itemDiv.classList.add("totals");
+    itemDiv.innerHTML = `<p>Subtotal: €${total.toFixed(2)}</p><p>Discount: €${discount.toFixed(2)}</p><h3>Total: €${(total - discount).toFixed(2)}</h3>`;
+    cartSection.appendChild(itemDiv);
+
+
+  }
+
 
 // VOUCHER SYSTEM
 function applyVoucher() {
@@ -50,6 +159,8 @@ function applyGiftCard() {
 
   updateTotal();
 }
+
+      window.onload = loadCart;
 </script>
 
   <body>
@@ -66,23 +177,7 @@ function applyGiftCard() {
 
   <!-- LEFT: CART SUMMARY -->
   <section class="cart-section">
-    <h2>Your Cart</h2>
 
-    <div class="cart-item">
-      <p>Product 1</p>
-      <p>€20</p>
-    </div>
-
-    <div class="cart-item">
-      <p>Product 2</p>
-      <p>€15</p>
-    </div>
-
-    <div class="totals">
-      <p>Subtotal: €<span id="subtotal">35</span></p>
-      <p>Discount: €<span id="discount">0</span></p>
-      <h3>Total: €<span id="total">35</span></h3>
-    </div>
   </section>
 
 
