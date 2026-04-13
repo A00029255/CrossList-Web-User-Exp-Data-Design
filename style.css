@@ -15,7 +15,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: rgba(0,0,0,0.9);
+  background: #000;
   color: white;
   position: sticky;
   top: 0;
@@ -57,7 +57,7 @@ body {
 
 /*  This is the footer of the MAIN body */
 .site-footer {
-    background: rgb(0, 119, 255);
+    background: #000;
     color: #fff;
     
     font-family: sans-serif;
