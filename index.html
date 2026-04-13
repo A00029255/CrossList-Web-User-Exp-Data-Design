@@ -2,56 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TechHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="home">
 
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">TechHub</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="about_us.html">About</a>
-      <a href="checkout.html">Cart</a>
-      <a href="contact_us.html">Contact</a>
-    </div>
+    <a href="index.html">Homepage</a>
+    <a href="products.html">Products</a>
+    <a href="about_us.html">About</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="contact_us.html">Contact</a>
   </nav>
 
   <!-- HERO -->
   <header class="middle">
-    <div class="hero-content">
-      <h1>Future of Tech</h1>
-      <p>Premium devices. Seamless experience.</p>
-      <a href="products.html" class="btn">Explore Products</a>
-    </div>
+    <h1>Welcome to TechHub</h1>
+    <p>Your one-stop shop for the latest tech gadgets</p>
+    <a href="products.html" class="btn">Shop Now</a>
   </header>
 
-  <!-- FEATURED -->
+  <!-- FEATURED PRODUCTS -->
   <section class="featured">
-    <h2>Shop by Category</h2>
+    <h2>Featured Products</h2>
 
     <div class="product-container">
 
-      <div class="product-card" onclick="viewProduct('phone')">
-        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80">
-        <h3>Phones</h3>
-        <p>Latest smartphones</p>
+      <!-- IPHONE -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80" alt="iPhone 15">
+        <h3>iPhone 15</h3>
+        <p>€999</p>
+        <button onclick="viewProduct('iphone')">View</button>
       </div>
 
-      <div class="product-card" onclick="viewProduct('laptop')">
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80">
-        <h3>Laptops</h3>
-        <p>Power & performance</p>
+      <!-- MACBOOK -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" alt="MacBook">
+        <h3>MacBook Air</h3>
+        <p>€1200</p>
+        <button onclick="viewProduct('laptop')">View</button>
       </div>
 
-      <div class="product-card" onclick="viewProduct('headphone')">
-        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80">
-        <h3>Headphones</h3>
-        <p>Immersive sound</p>
+      <!-- HEADPHONES -->
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Headphones">
+        <h3>Wireless Headphones</h3>
+        <p>€199</p>
+        <button onclick="viewProduct('headphones')">View</button>
       </div>
 
     </div>
@@ -59,40 +60,34 @@
 
   <!-- WHY US -->
   <section class="why-us">
-    <h2>Why TechHub?</h2>
+    <h2>Why Choose TechHub?</h2>
 
     <div class="features">
       <div>
         <h3>Fast Delivery</h3>
-        <p>Speedy and secure shipping</p>
+        <p>Get your tech delivered quickly</p>
       </div>
 
       <div>
         <h3>Best Prices</h3>
-        <p>Premium tech at fair prices</p>
+        <p>Affordable deals on all gadgets</p>
       </div>
 
       <div>
-        <h3>Trusted Quality</h3>
-        <p>Only verified products</p>
+        <h3>Trusted Products</h3>
+        <p>Only high-quality tech items</p>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Upgrade your setup today</h2>
-    <a href="products.html" class="btn">Start Shopping</a>
-  </section>
-
   <!-- FOOTER -->
   <footer class="site-footer">
-    <p>&copy; 2026 TechHub</p>
+    <p>&copy; 2024 Tech Hub</p>
   </footer>
 
   <script>
-    function viewProduct(category) {
-      window.location.href = "products.html#" + category;
+    function viewProduct(type) {
+      window.location.href = "products.html#" + type;
     }
   </script>
 
