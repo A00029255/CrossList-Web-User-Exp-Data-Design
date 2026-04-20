@@ -6,6 +6,34 @@
   <title>Contact Us</title>
   <link rel="stylesheet" href="style.css">
 </head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
+  const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  async function sendMessage(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const { data, error } = await supabase
+      .from("contacts")
+      .insert([{ name, email, message }]);
+
+    if (error) {
+      alert("Error sending message ❌");
+      console.log(error);
+    } else {
+      alert("Message sent successfully ✅");
+      document.querySelector("form").reset();
+    }
+  }
+</script>
+
 
 <body>
 
