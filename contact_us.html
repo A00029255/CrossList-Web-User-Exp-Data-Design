@@ -31,12 +31,13 @@
   <section class="contact-card">
     <h2>Send Us a Message</h2>
 
-    <form onsubmit="showMessage(); return false;">
-      <input type="text" placeholder="Full Name" required>
-      <input type="email" placeholder="Email Address" required>
-      <textarea placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <form onsubmit="sendMessage(event)">
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email Address" required>
+  <textarea id="message" placeholder="Your Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
+    
   </section>
 
   <!-- INFO CARDS -->
