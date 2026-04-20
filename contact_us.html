@@ -9,9 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
-  const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  const { createClient } = supabase;
+
+  const client = createClient(
+    "https://eehtvevnukdhrwudlmat.supabase.co",
+    "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc"
+  );
 
   async function sendMessage(event) {
     event.preventDefault();
@@ -20,15 +23,15 @@
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
 
-    const { data, error } = await supabase
+    const { error } = await client
       .from("contacts")
       .insert([{ name, email, message }]);
 
     if (error) {
-      alert("Error sending message ❌");
       console.log(error);
+      alert("Error ❌ check console");
     } else {
-      alert("Message sent successfully ✅");
+      alert("Message sent ✅");
       document.querySelector("form").reset();
     }
   }
@@ -59,11 +62,11 @@
   <section class="contact-card">
     <h2>Send Us a Message</h2>
 
-    <form onsubmit="sendMessage(event)">
-  <input type="text" id="name" placeholder="Full Name" required>
-  <input type="email" id="email" placeholder="Email Address" required>
-  <textarea id="message" placeholder="Your Message" required></textarea>
-  <button type="submit">Send Message</button>
+   <form onsubmit="sendMessage(event)">
+  <input type="text" id="name" required>
+  <input type="email" id="email" required>
+  <textarea id="message" required></textarea>
+  <button type="submit">Send</button>
 </form>
     
   </section>
