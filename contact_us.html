@@ -10,114 +10,103 @@
 <body>
 
   <nav class="navbar">
-<a href="index.html" class="logo">Tech Galaxy</a>    
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="about_us.html">About</a>
-      <a href="checkout.html">Cart</a>
-      <a href="contact_us.html">Contact</a>
-    </div>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="about_us.html">About</a>
+    <a href="checkout.html">Cart</a>
+    <a href="contact_us.html">Contact</a>
   </nav>
 
-  <header>
-    <h1>Contact Us</h1>
-    <p>If you have any questions, feel free to contact us using the form below.</p>
+  <!-- HERO SECTION -->
+  <header class="contact-hero">
+    <h1>Contact Tech Galaxy</h1>
+    <p>We’re here to help. Reach out to us anytime and we’ll happily answer your questions.</p>
   </header>
 
-  <section class="contact-form">
+  <!-- CONTACT FORM CARD -->
+  <section class="contact-card">
+    <h2>Send Us a Message</h2>
+
     <form onsubmit="showMessage(); return false;">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="email">Email Address:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
       <button type="submit">Send Message</button>
     </form>
   </section>
 
-  <section class="contact-info">
-    <h2>Opening Hours</h2>
-    <p>Monday - Friday: 9:00 AM – 5:00 PM</p>
-    <p>Saturday: 10:00 AM – 4:00 PM</p>
-    <p>Sunday: Closed</p>
+  <!-- INFO CARDS -->
+  <section class="contact-grid">
+
+    <div class="info-box">
+      <h3>Contact Info</h3>
+      <p>Email: info@tudublin.ie</p>
+      <p>Phone: +353 1 234 5678</p>
+      <p>Location: Dublin 24</p>
+    </div>
+
+    <div class="info-box">
+      <h3>Opening Hours</h3>
+      <p>Mon - Fri: 9AM – 5PM</p>
+      <p>Saturday: 10AM – 4PM</p>
+      <p>Sunday: Closed</p>
+    </div>
+
+    <div class="info-box">
+      <h3>FAQs</h3>
+      <p>Delivery: 3–5 days</p>
+      <p>Returns: 14 days</p>
+      <p>Student Discount: 10%</p>
+    </div>
+
   </section>
 
-  <section class="contact-details">
-    <h2>Contact Information</h2>
-    <p><strong>Email:</strong> info@tudublin.ie</p>
-    <p><strong>Phone:</strong> +353 1 234 5678</p>
-    <p><strong>Address:</strong> TU Dublin Tallaght, Dublin 24</p>
-  </section>
-
-  <section class="faq">
-    <h2>Frequently Asked Questions</h2>
-    <p><strong>How long does delivery take?</strong><br> 3–5 working days.</p>
-    <p><strong>Can I return a product?</strong><br> Yes, within 14 days.</p>
-    <p><strong>Do you offer student discount?</strong><br> Yes, 10% off with student ID.</p>
-  </section>
-
+  <!-- MAP SECTION -->
   <section class="map">
     <h2>Our Location</h2>
-    <div>
-      <iframe
-        src="https://www.google.com/maps?q=Technological+University+Dublin+Tallaght&output=embed"
-        width="600"
-        height="450"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-      </iframe>
-    </div>
+    <iframe
+      src="https://www.google.com/maps?q=Technological+University+Dublin+Tallaght&output=embed"
+      width="600"
+      height="400"
+      style="border:0;">
+    </iframe>
   </section>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-section social">
-      <h4>Follow Us</h4>
-      <a href="https://instagram.com" target="_blank">
-        <img
-          src="https://cdn.simpleicons.org/instagram/ffffff"
-          alt="Instagram"
-        />
-        Instagram
-      </a>
-      <a href="https://facebook.com" target="_blank">
-        <img
-          src="https://cdn.simpleicons.org/facebook/ffffff"
-          alt="Facebook"
-        />
-        Facebook
-      </a>
+    <div class="footer-container">
+
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <p>Instagram</p>
+        <p>Facebook</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>info@tudublin.ie</p>
+        <p>+353 1 234 5678</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Location</h4>
+        <p>Technological University Dublin</p>
+        <p>Dublin 24</p>
+      </div>
+
     </div>
 
-    <div class="footer-section contact">
-      <h4>Contact</h4>
-      <p>Email: <a href="mailto:info@tudublin.ie">info@tudublin.ie</a></p>
-      <p>Phone: <a href="tel:+35312345678">+353 1 234 5678</a></p>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Tech Galaxy</p>
     </div>
-
-    <div class="footer-section location">
-      <h4>Location</h4>
-      <p>Technological University Dublin</p>
-      <p>Tallaght, Blessington Rd, Dublin 24, Ireland</p>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; 2026 Tech Galaxy. All rights reserved.</p>
-  </div>
-</footer>
+  </footer>
 
   <script>
     function showMessage() {
-      alert("Thank you! Your message has been sent.");
+      alert("Message sent successfully!");
     }
   </script>
 
 </body>
 </html>
+
