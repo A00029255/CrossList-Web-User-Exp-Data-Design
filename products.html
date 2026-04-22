@@ -11,16 +11,16 @@
 
   <body>
     <!-- NAVBAR -->
-  <nav class="navbar">
-<a href="index.html" class="logo">Tech Galaxy</a>    
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="about_us.html">About</a>
-      <a href="checkout.html">Cart</a>
-      <a href="contact_us.html">Contact</a>
-    </div>
-  </nav>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Tech Galaxy</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="about_us.html">About</a>
+        <a href="checkout.html">Cart</a>
+        <a href="contact_us.html">Contact</a>
+      </div>
+    </nav>
 
     <!-- FILTER -->
     <section class="categories">
@@ -79,84 +79,82 @@
 
     <!-- FOOTER -->
     <footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-section social">
-      <h4>Follow Us</h4>
-      <a href="https://instagram.com" target="_blank">
-        <img
-          src="https://cdn.simpleicons.org/instagram/ffffff"
-          alt="Instagram"
-        />
-        Instagram
-      </a>
-      <a href="https://facebook.com" target="_blank">
-        <img
-          src="https://cdn.simpleicons.org/facebook/ffffff"
-          alt="Facebook"
-        />
-        Facebook
-      </a>
-    </div>
+      <div class="footer-container">
+        <div class="footer-section social">
+          <h4>Follow Us</h4>
+          <a href="https://instagram.com" target="_blank">
+            <img
+              src="https://cdn.simpleicons.org/instagram/ffffff"
+              alt="Instagram"
+            />
+            Instagram
+          </a>
+          <a href="https://facebook.com" target="_blank">
+            <img
+              src="https://cdn.simpleicons.org/facebook/ffffff"
+              alt="Facebook"
+            />
+            Facebook
+          </a>
+        </div>
 
-    <div class="footer-section contact">
-      <h4>Contact</h4>
-      <p>Email: <a href="mailto:info@tudublin.ie">info@tudublin.ie</a></p>
-      <p>Phone: <a href="tel:+35312345678">+353 1 234 5678</a></p>
-    </div>
+        <div class="footer-section contact">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:info@tudublin.ie">info@tudublin.ie</a></p>
+          <p>Phone: <a href="tel:+35312345678">+353 1 234 5678</a></p>
+        </div>
 
-    <div class="footer-section location">
-      <h4>Location</h4>
-      <p>Technological University Dublin</p>
-      <p>Tallaght, Blessington Rd, Dublin 24, Ireland</p>
-    </div>
-  </div>
+        <div class="footer-section location">
+          <h4>Location</h4>
+          <p>Technological University Dublin</p>
+          <p>Tallaght, Blessington Rd, Dublin 24, Ireland</p>
+        </div>
+      </div>
 
-  <div class="footer-bottom">
-    <p>&copy; 2026 Tech Galaxy. All rights reserved.</p>
-  </div>
-</footer>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Tech Galaxy. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>
 
-    <script>
-      // CONNECTS TO SUPABASE
-      const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
-      const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
+<script>
+  // CONNECTS TO SUPABASE
+  const supabaseUrl = "https://eehtvevnukdhrwudlmat.supabase.co";
+  const supabaseKey = "sb_publishable_P9yhIU_CzvEePe9KujiJpg_zACInFVc";
 
-      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-      // GLOBAL VARIABLES
-      let currentFilter = "all"; // tracks selected category
-      let allProducts = []; // stores products from database
-      let editingId = null; // tells web if you're editing or adding
+  // GLOBAL VARIABLES
+  let currentFilter = "all"; // tracks selected category
+  let allProducts = []; // stores products from database
+  let editingId = null; // tells web if you're editing or adding
 
-      // LOAD PRODUCTS
-      async function loadProducts() {
-        const { data, error } = await supabaseClient
-          .from("products")
-          .select("*");
+  // LOAD PRODUCTS
+  async function loadProducts() {
+    const { data, error } = await supabaseClient.from("products").select("*");
 
-        if (error) {
-          console.error(error);
-          return; // stop function if something goes wrong
-        }
+    if (error) {
+      console.error(error);
+      return; // stop function if something goes wrong
+    }
 
-        allProducts = data;
-        displayProducts(allProducts); // displays data
-      }
+    allProducts = data;
+    displayProducts(allProducts); // displays data
+  }
 
-      // DISPLAY
-      function displayProducts(products) {
-        const productList = document.getElementById("productList");
-        productList.innerHTML = ""; // remove old products to avoid duplicating
+  // DISPLAY
+  function displayProducts(products) {
+    const productList = document.getElementById("productList");
+    productList.innerHTML = ""; // remove old products to avoid duplicating
 
-        products.forEach((product) => {
-          const card = document.createElement("div");
-          card.classList.add("product-card");
+    products.forEach((product) => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
 
-          card.innerHTML =
-            // uses product image or placeholder if none exists
-            `
+      card.innerHTML =
+        // uses product image or placeholder if none exists
+        `
           <img src="${product.image_url || "https://via.placeholder.com/200"}">
           <h3>${product.name}</h3>
           <p>€${product.price}</p>
@@ -165,184 +163,182 @@
           <button onclick="deleteProduct(${product.id}, '${product.name}')">Delete</button>
         `;
 
-          productList.appendChild(card);
-        });
+      productList.appendChild(card);
+    });
+  }
+
+  // EDIT
+  function editProduct(id, name, price, category) {
+    document.getElementById("name").value = name;
+    document.getElementById("price").value = price;
+    document.getElementById("category").value = category;
+
+    editingId = id; // updates not create
+
+    document.getElementById("formTitle").innerText = "Update Product"; // informs user we are editing
+    document.getElementById("submitBtn").innerText = "Update Product";
+  }
+
+  // ADD / UPDATE + IMAGE UPLOAD
+  async function addOrUpdateProduct() {
+    const name = document.getElementById("name").value; // reads what user has typed
+    const price = document.getElementById("price").value;
+    const category = document.getElementById("category").value;
+
+    const fileInput = document.getElementById("imageFile"); // gets users file
+    let imageUrl = "";
+
+    if (!name) {
+      alert("Please select a name");
+      return;
+    }
+
+    if (!price) {
+      alert("Please select a price");
+      return;
+    }
+
+    if (!category) {
+      alert("Please select a category");
+      return;
+    }
+
+    // UPLOAD IMAGE
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const fileName = Date.now() + "-" + file.name; // makes a unique file name to prevent overwrites
+
+      const { error: uploadError } = await supabaseClient.storage
+        .from("product-images")
+        .upload(fileName, file);
+
+      if (uploadError) {
+        console.error(uploadError);
+        return;
       }
 
-      // EDIT
-      function editProduct(id, name, price, category) {
-        document.getElementById("name").value = name;
-        document.getElementById("price").value = price;
-        document.getElementById("category").value = category;
+      const { data } = supabaseClient.storage
+        .from("product-images")
+        .getPublicUrl(fileName); // gets usable url from storage
 
-        editingId = id; // updates not create
+      imageUrl = data.publicUrl; // link stored in storage
+    }
 
-        document.getElementById("formTitle").innerText = "Update Product"; // informs user we are editing
-        document.getElementById("submitBtn").innerText = "Update Product";
-      }
+    if (editingId) // if we are editing
+    {
+      await supabaseClient
+        .from("products")
+        .update({
+          name,
+          price,
+          category,
+          ...(imageUrl && { image_url: imageUrl }), // we only update image if a new one is uploaded
+        })
+        .eq("id", editingId);
+    } else // we are creating
+    {
+      await supabaseClient
+        .from("products")
+        .insert([{ name, price, category, image_url: imageUrl }]); // adds the new / updates the row
+    }
 
-      // ADD / UPDATE + IMAGE UPLOAD
-      async function addOrUpdateProduct() {
-        const name = document.getElementById("name").value; // reads what user has typed
-        const price = document.getElementById("price").value;
-        const category = document.getElementById("category").value;
+    resetForm();
+    loadProducts(); // reload the products for any new products
+  }
 
-        const fileInput = document.getElementById("imageFile"); // gets users file
-        let imageUrl = "";
+  // DELETE
+  async function deleteProduct(id, name) {
+    const confirmDelete = confirm(`Are you sure you want to delete "${name}"?`);
 
-        if (!name) {
-          alert("Please select a name");
-          return;
-        }
+    if (!confirmDelete) {
+      return; // stops if user cancels
+    }
 
-        if (!price) {
-          alert("Please select a price");
-          return;
-        }
+    // delete from supabase
+    const { error } = await supabaseClient
+      .from("products")
+      .delete()
+      .eq("id", id);
 
-        if (!category) {
-          alert("Please select a category");
-          return;
-        }
+    //error or success message
+    if (error) {
+      console.error(error);
+      alert("Error deleting product");
+    } else {
+      alert("Product deleted successfully");
+      loadProducts(); // reload the products for any deleted products
+    }
+  }
 
-        // UPLOAD IMAGE
-        if (fileInput.files.length > 0) {
-          const file = fileInput.files[0];
-          const fileName = Date.now() + "-" + file.name; // makes a unique file name to prevent overwrites
+  // SORT
+  function sortBy(type) {
+    let sorted = [...allProducts]; // makes a copy for sorting
 
-          const { error: uploadError } = await supabaseClient.storage
-            .from("product-images")
-            .upload(fileName, file);
+    if (type === "id") {
+      sorted.sort((a, b) => b.id - a.id); // sorts by id (newest)
+    } else {
+      sorted.sort((a, b) => a.name.localeCompare(b.name)); // sort from alphabetical order
+    }
 
-          if (uploadError) {
-            console.error(uploadError);
-            return;
-          }
+    displayProducts(sorted);
+  }
 
-          const { data } = supabaseClient.storage
-            .from("product-images")
-            .getPublicUrl(fileName); // gets usable url from storage
+  // FILTER + SEARCH
+  function filterProducts(category) {
+    currentFilter = category;
+    applyFilters(); // sorts from category
+  }
 
-          imageUrl = data.publicUrl; // link stored in storage
-        }
+  function searchProducts() {
+    applyFilters();
+  }
 
-        if (editingId) // if we are editing
-        {
-          await supabaseClient
-            .from("products")
-            .update({
-              name,
-              price,
-              category,
-              ...(imageUrl && { image_url: imageUrl }), // we only update image if a new one is uploaded
-            })
-            .eq("id", editingId);
-        } else // we are creating
-        {
-          await supabaseClient
-            .from("products")
-            .insert([{ name, price, category, image_url: imageUrl }]); // adds the new / updates the row
-        }
+  function applyFilters() {
+    let searchInput = document
+      .getElementById("searchInput") // reads the users text
+      .value.toLowerCase();
 
-        resetForm();
-        loadProducts(); // reload the products for any new products
-      }
+    let filtered = allProducts.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchInput) && // case insensitve search
+        (currentFilter === "all" || product.category === currentFilter), // filter for all or category
+    );
 
-      // DELETE
-      async function deleteProduct(id, name) {
-        const confirmDelete = confirm(
-          `Are you sure you want to delete "${name}"?`,
-        );
+    displayProducts(filtered);
+  }
 
-        if (!confirmDelete) {
-          return; // stops if user cancels
-        }
+  // RESET FORM
+  function resetForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("imageFile").value = "";
 
-        // delete from supabase
-        const { error } = await supabaseClient
-          .from("products")
-          .delete()
-          .eq("id", id);
+    editingId = null; // switches back to editing mode
 
-        //error or success message
+    document.getElementById("formTitle").innerText = "Add Product";
+    document.getElementById("submitBtn").innerText = "Add Product";
+  }
+
+  // CANCEL FUNCTION
+  function cancelEdit() {
+    resetForm(); // clears everything
+  }
+
+  // CART
+  function addToCart(productId, productName) {
+    supabaseClient
+      .from("cart")
+      .insert([{ product_id: productId }]) // adds the new / updates the row
+      .then(({ data, error }) => {
         if (error) {
           console.error(error);
-          alert("Error deleting product");
+          alert("Error adding to cart");
         } else {
-          alert("Product deleted successfully");
-          loadProducts(); // reload the products for any deleted products
+          alert(productName + " added to cart!");
         }
-      }
+      });
+  }
 
-      // SORT
-      function sortBy(type) {
-        let sorted = [...allProducts]; // makes a copy for sorting
-
-        if (type === "id") {
-          sorted.sort((a, b) => b.id - a.id); // sorts by id (newest)
-        } else {
-          sorted.sort((a, b) => a.name.localeCompare(b.name)); // sort from alphabetical order
-        }
-
-        displayProducts(sorted);
-      }
-
-      // FILTER + SEARCH
-      function filterProducts(category) {
-        currentFilter = category;
-        applyFilters(); // sorts from category
-      }
-
-      function searchProducts() {
-        applyFilters();
-      }
-
-      function applyFilters() {
-        let searchInput = document
-          .getElementById("searchInput") // reads the users text
-          .value.toLowerCase();
-
-        let filtered = allProducts.filter(
-          (product) =>
-            product.name.toLowerCase().includes(searchInput) && // case insensitve search
-            (currentFilter === "all" || product.category === currentFilter), // filter for all or category
-        );
-
-        displayProducts(filtered);
-      }
-
-      // RESET FORM
-      function resetForm() {
-        document.getElementById("name").value = "";
-        document.getElementById("price").value = "";
-        document.getElementById("category").value = "";
-        document.getElementById("imageFile").value = "";
-
-        editingId = null; // switches back to editing mode
-
-        document.getElementById("formTitle").innerText = "Add Product";
-        document.getElementById("submitBtn").innerText = "Add Product";
-      }
-
-      // CANCEL FUNCTION
-      function cancelEdit() {
-        resetForm(); // clears everything
-      }
-
-      // CART
-      function addToCart(productId, productName) {
-        supabaseClient
-          .from("cart")
-          .insert([{ product_id: productId, }]) // adds the new / updates the row
-          .then(({ data, error }) => {
-            if (error) {
-              console.error(error);
-              alert("Error adding to cart");
-            } else {
-              alert(productName + " added to cart!");
-            }
-          });
-      }
-
-      window.onload = loadProducts;
-    </script>
+  window.onload = loadProducts;
+</script>
