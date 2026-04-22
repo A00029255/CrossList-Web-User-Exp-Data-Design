@@ -155,7 +155,9 @@
       card.innerHTML =
         // uses product image or placeholder if none exists
         `
-          <img src="${product.image_url || "https://via.placeholder.com/200"}">
+          <div class="product-image">
+            <img src="${product.image_url || "https://via.placeholder.com/200"}" alt="${product.name}">
+          </div>
           <h3>${product.name}</h3>
           <p>€${product.price}</p>
           <button onclick="addToCart('${product.id}', '${product.name}')">Add to Cart</button>
